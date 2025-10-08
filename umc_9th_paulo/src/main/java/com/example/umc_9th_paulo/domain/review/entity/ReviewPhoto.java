@@ -1,5 +1,6 @@
 package com.example.umc_9th_paulo.domain.review.entity;
 
+import com.example.umc_9th_paulo.domain.inquiry.entity.Inquiry;
 import com.example.umc_9th_paulo.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -18,4 +19,8 @@ public class ReviewPhoto extends BaseEntity {
 
     @Column(name = "image_url", length = 256, nullable = false)
     private String imageUrl;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "review_id")
+    private Review review;
 }

@@ -42,4 +42,8 @@ public class UserInfo extends BaseEntity {
     @Column(name = "phone_num_verification", nullable = false)
     @Builder.Default
     private Boolean phoneNumVerification = false;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 }

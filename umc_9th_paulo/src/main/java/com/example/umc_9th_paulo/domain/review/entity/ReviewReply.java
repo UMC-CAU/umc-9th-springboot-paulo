@@ -1,5 +1,6 @@
 package com.example.umc_9th_paulo.domain.review.entity;
 
+import com.example.umc_9th_paulo.domain.user.entity.User;
 import com.example.umc_9th_paulo.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -18,4 +19,8 @@ public class ReviewReply extends BaseEntity {
 
     @Column(name = "content", length = 1000, nullable = false)
     private String content;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "review_id")
+    private Review review;
 }

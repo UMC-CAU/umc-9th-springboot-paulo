@@ -10,7 +10,7 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
-@Table(name = "point_historys")
+@Table(name = "point_history")
 public class PointHistory extends BaseEntity {
 
     @Id
@@ -26,4 +26,8 @@ public class PointHistory extends BaseEntity {
 
     @Column(name = "description", length = 100, nullable = false)
     private String description;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_point_id")
+    private UserPoint userPoint;
 }

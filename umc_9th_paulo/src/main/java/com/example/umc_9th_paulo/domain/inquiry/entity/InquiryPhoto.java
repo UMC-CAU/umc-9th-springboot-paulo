@@ -1,5 +1,6 @@
 package com.example.umc_9th_paulo.domain.inquiry.entity;
 
+import com.example.umc_9th_paulo.domain.user.entity.User;
 import com.example.umc_9th_paulo.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -18,4 +19,8 @@ public class InquiryPhoto extends BaseEntity {
 
     @Column(name = "image_url", length = 256, nullable = false)
     private String imageUrl;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "inquiry_id")
+    private Inquiry inquiry;
 }

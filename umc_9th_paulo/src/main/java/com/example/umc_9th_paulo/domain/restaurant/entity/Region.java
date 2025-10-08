@@ -1,8 +1,12 @@
 package com.example.umc_9th_paulo.domain.restaurant.entity;
 
+import com.example.umc_9th_paulo.domain.user.entity.UserFood;
 import com.example.umc_9th_paulo.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Builder
@@ -24,4 +28,7 @@ public class Region extends BaseEntity {
 
     @Column(name = "longitude", nullable = false)
     private Double longitude;
+
+    @OneToMany(mappedBy = "region", cascade = CascadeType.ALL)
+    private List<Restaurant> restaurants = new ArrayList<>();
 }

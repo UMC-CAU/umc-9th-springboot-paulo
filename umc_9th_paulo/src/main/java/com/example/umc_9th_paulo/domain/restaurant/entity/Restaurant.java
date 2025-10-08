@@ -1,9 +1,16 @@
 package com.example.umc_9th_paulo.domain.restaurant.entity;
 
+import com.example.umc_9th_paulo.domain.mission.entity.Mission;
 import com.example.umc_9th_paulo.domain.restaurant.enums.ResType;
+import com.example.umc_9th_paulo.domain.review.entity.Review;
+import com.example.umc_9th_paulo.domain.user.entity.User;
+import com.example.umc_9th_paulo.domain.user.entity.UserFood;
 import com.example.umc_9th_paulo.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Builder
@@ -38,4 +45,17 @@ public class Restaurant extends BaseEntity {
 
     @Column(name = "description", length = 1000, nullable = false)
     private String description;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "region_id")
+    private Region region;
+
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
+    private List<OwnerRestaurant> ownerRestaurants = new ArrayList<>();
+
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
+    private List<Mission> missions = new ArrayList<>();
+
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
+    private List<Review> reviews = new ArrayList<>();
 }
