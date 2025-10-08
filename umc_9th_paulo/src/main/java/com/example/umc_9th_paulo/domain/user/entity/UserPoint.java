@@ -27,6 +27,6 @@ public class UserPoint extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "user_point", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "userPoint", cascade = CascadeType.ALL)
     private List<PointHistory> pointHistories = new ArrayList<>();
 }
