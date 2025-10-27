@@ -1,6 +1,8 @@
 package com.example.umc_9th_paulo.domain.user.service;
 
 import com.example.umc_9th_paulo.domain.inquiry.repository.InquiryRepository;
+import com.example.umc_9th_paulo.domain.user.dto.UserResponseDto;
+import com.example.umc_9th_paulo.domain.user.entity.User;
 import com.example.umc_9th_paulo.domain.user.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -16,5 +18,17 @@ public class UserService {
     public void deleteUser(Long userId) {
         inquiryRepository.deleteById(userId);
         userRepository.deleteById(userId);
+    }
+
+    @Transactional
+    public UserResponseDto.UserMyPageDto getUserMyPage(Long userId) {
+        User user = userRepository.findById(userId).orElse(null);
+        return UserResponseDto.UserMyPageDto.builder()
+                .nickname(user.getNickname())
+                .email(user.getUserInfo().getEmail())
+                .imageUrl(user.getUserInfo().getImage())
+                .phoneVerified(user.getUserInfo().getPhoneNumVerification())
+                .points(user.getUserPoint().getTotalPoint())
+                .build();
     }
 }

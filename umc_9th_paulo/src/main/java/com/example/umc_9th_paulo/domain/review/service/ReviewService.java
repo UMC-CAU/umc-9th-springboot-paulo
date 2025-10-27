@@ -7,6 +7,7 @@ import com.example.umc_9th_paulo.domain.review.entity.Review;
 import com.example.umc_9th_paulo.domain.review.repository.ReviewRepository;
 import com.example.umc_9th_paulo.domain.user.entity.User;
 import com.example.umc_9th_paulo.domain.user.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ public class ReviewService {
     private final UserRepository userRepository;
     private final RestaurantRepository restaurantRepository;
 
+    @Transactional
     public ReviewResponseDto.CreateReview createReview(ReviewRequestDto.CreateReview dto) {
 
         Review review = Review.builder()
