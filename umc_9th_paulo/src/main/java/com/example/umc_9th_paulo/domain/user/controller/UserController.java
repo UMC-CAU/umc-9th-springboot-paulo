@@ -19,7 +19,7 @@ public class UserController {
         return ResponseEntity.ok("사용자 ID: " + userId + "가 성공적으로 삭제되었습니다.");
     }
 
-    @PostMapping("/mypage/{userId}")
+    @GetMapping("/mypage/{userId}")
     public UserResponseDto.UserMyPageDto getUserMyPage(@PathVariable Long userId){
         return userService.getUserMyPage(userId);
     }
