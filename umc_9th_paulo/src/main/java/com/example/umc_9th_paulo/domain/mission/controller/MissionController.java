@@ -22,9 +22,16 @@ public class MissionController {
         return missionService.MissionUserInfo(userId, finished, pageable);
     }
 
-    @GetMapping("/regions/{regionName}")
+    @GetMapping("/regions/{regionName}/finished")
     public MissionResponseDto.MissionRegionDto countMissionRegion(@PathVariable String regionName,
                                                                   @RequestParam Long userId) {
         return missionService.getRegionMission(regionName, userId);
+    }
+
+    @GetMapping("/regions/{regionName}")
+    public Page<MissionResponseDto.MissionRegionCanDto> regionCanDto(@PathVariable String regionName,
+                                                                     @RequestParam Long userId,
+                                                                     @PageableDefault(size = 10, sort = "remainingDuration") Pageable pageable) {
+        return missionService.getRegionMissionCanDo(regionName, userId, pageable);
     }
 }

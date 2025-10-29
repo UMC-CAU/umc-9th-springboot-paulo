@@ -30,4 +30,15 @@ public class MissionResponseDto {
         Long regionId;
         String regionName;
     }
+
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class MissionRegionCanDto {
+        String restaurantName;
+        String missionDescription;
+        String missionReward;
+        Integer missionDuration;
+    }
 }
