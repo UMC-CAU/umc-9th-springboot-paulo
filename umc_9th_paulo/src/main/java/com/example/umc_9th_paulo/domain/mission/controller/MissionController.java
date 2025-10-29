@@ -1,5 +1,6 @@
 package com.example.umc_9th_paulo.domain.mission.controller;
 
+import com.example.umc_9th_paulo.domain.mission.dto.MissionRequestDto;
 import com.example.umc_9th_paulo.domain.mission.dto.MissionResponseDto;
 import com.example.umc_9th_paulo.domain.mission.service.MissionService;
 import lombok.RequiredArgsConstructor;
@@ -19,5 +20,11 @@ public class MissionController {
     public Page<MissionResponseDto.MissionUserDto> getMissionUser(@PathVariable Long userId, @RequestParam("finished") Boolean finished,
                                                                   @PageableDefault(size = 10, sort = "createdAt") Pageable pageable) {
         return missionService.MissionUserInfo(userId, finished, pageable);
+    }
+
+    @GetMapping("/regions/{regionName}")
+    public MissionResponseDto.MissionRegionDto countMissionRegion(@PathVariable String regionName,
+                                                                  @RequestParam Long userId) {
+        return missionService.getRegionMission(regionName, userId);
     }
 }

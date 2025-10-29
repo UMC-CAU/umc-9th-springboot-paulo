@@ -20,4 +20,14 @@ public class MissionResponseDto {
         Boolean isSuccess;
         LocalDateTime createdAt;
     }
+
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class MissionRegionDto {
+        Integer finished;
+        Long regionId;
+        String regionName;
+    }
 }

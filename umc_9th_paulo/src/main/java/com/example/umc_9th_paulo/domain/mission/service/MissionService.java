@@ -1,9 +1,12 @@
 package com.example.umc_9th_paulo.domain.mission.service;
 
 
+import com.example.umc_9th_paulo.domain.mission.dto.MissionRequestDto;
 import com.example.umc_9th_paulo.domain.mission.dto.MissionResponseDto;
 import com.example.umc_9th_paulo.domain.mission.entity.UserMission;
 import com.example.umc_9th_paulo.domain.mission.repository.UserMissionRepository;
+import com.example.umc_9th_paulo.domain.restaurant.entity.Region;
+import com.example.umc_9th_paulo.domain.restaurant.repository.RegionRepository;
 import com.example.umc_9th_paulo.domain.user.entity.User;
 import com.example.umc_9th_paulo.domain.user.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -19,6 +22,7 @@ import java.util.List;
 public class MissionService {
     private final UserRepository userRepository;
     private final UserMissionRepository userMissionRepository;
+    private final RegionRepository regionRepository;
 
     @Transactional
     public Page<MissionResponseDto.MissionUserDto> MissionUserInfo(Long userId, Boolean finished, Pageable pageable) {
@@ -34,5 +38,16 @@ public class MissionService {
                     .build();
         });
         return missionUserDtos;
+    }
+
+    @Transactional
+    public MissionResponseDto.MissionRegionDto getRegionMission(String regionName, Long userId) {
+        Region region = regionRepository.findByName(regionName);
+        Integer finished = userMissionRepository.countByIsSuccessAndUserIdAndMission_Restaurant_Region_Id(true, userId, region.getId());
+        return MissionResponseDto.MissionRegionDto.builder()
+                .regionId(region.getId())
+                .finished(finished)
+                .regionName(region.getName())
+                .build();
     }
 }
