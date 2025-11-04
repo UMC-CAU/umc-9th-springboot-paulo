@@ -1,8 +1,10 @@
 package com.example.umc_9th_paulo.domain.review.repository;
 
 
+import com.example.umc_9th_paulo.domain.restaurant.entity.QRestaurant;
 import com.example.umc_9th_paulo.domain.review.entity.QReview;
 import com.example.umc_9th_paulo.domain.review.entity.Review;
+import com.example.umc_9th_paulo.domain.user.entity.QUser;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
@@ -29,6 +31,24 @@ public class ReviewQueryDslImpl implements ReviewQueryDsl {
 
         return queryFactory
                 .selectFrom(review)
+                .where(predicate)
+                .fetch();
+    }
+
+    @Override
+    public List<Review> searchReviewJoin(
+            Predicate predicate
+    ){
+        JPAQueryFactory queryFactory = new JPAQueryFactory(em);
+
+        QReview review = QReview.review;
+        QRestaurant restaurant = QRestaurant.restaurant;
+        QUser user = QUser.user;
+
+        return queryFactory
+                .selectFrom(review)
+                .leftJoin(restaurant).on(restaurant.id.eq(review.restaurant.id))
+                .leftJoin(user).on(user.id.eq(review.user.id))
                 .where(predicate)
                 .fetch();
     }

@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 public class ReviewQueryService {
     private final ReviewRepository reviewRepository;
 
-    public List<ReviewResponseDto.searchReview> searchReview(String regionName, Float star, Long userId) {
+    public List<ReviewResponseDto.searchReview> searchReview(String regionName, Float star, Long userId, Integer type) {
         QReview review = QReview.review;
         BooleanBuilder builder = new BooleanBuilder();
 
@@ -28,7 +28,16 @@ public class ReviewQueryService {
         if(star != null) {
             builder.and(review.score.goe(star));
         }
-        List<Review> reviewList = reviewRepository.searchReview(builder);
+
+        List<Review> reviewList;
+
+        if(type == 1) {
+            reviewList = reviewRepository.searchReview(builder);
+        }
+        else {
+            reviewList = reviewRepository.searchReviewJoin(builder);
+        }
+
         return reviewList.stream()
                 .map(temp -> ReviewResponseDto.searchReview.builder()
                         .star(temp.getScore())
