@@ -8,7 +8,7 @@ public class ReviewRequestDto {
     @Getter
     @Setter
     public static class CreateReview {
-        Integer score;
+        Float score;
         String content;
         Long userId;
         Long restaurantId;
