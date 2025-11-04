@@ -24,3 +24,6 @@ hs_err_pid*
 replay_pid*
 
 .env
+# QueryDSL Q-클래스 및 빌드 결과
+/build/
+
