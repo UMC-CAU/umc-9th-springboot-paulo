@@ -13,6 +13,8 @@ import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.NumberExpression;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.usertype.BaseUserTypeSupport;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -25,14 +27,13 @@ public class RestaurantQueryService {
 
     private final RestaurantRepository restaurantRepository;
 
-    public List<RestaurantResponseDto.searchRestaurant> searchRestaurants(List<String> regionName, String content){
+    public Page<RestaurantResponseDto.searchRestaurant> searchRestaurants(List<String> regionName, String content, Pageable pageable){
         QRestaurant restaurant = QRestaurant.restaurant;
-        QRegion region = QRegion.region;
 
         BooleanBuilder builder = new BooleanBuilder();
 
         if(regionName != null && !regionName.isEmpty()) {
-            builder.and(region.name.in(regionName));
+            builder.and(restaurant.region.name.in(regionName));
         }
         if(content != null && !content.isEmpty()) {
 
@@ -61,17 +62,15 @@ public class RestaurantQueryService {
                 restaurant.createdAt.desc()
         };
 
-        List<Restaurant> restaurantList = restaurantRepository.searchRestaurant(builder, orderSpecifiers);
+        Page<Restaurant> restaurantList = restaurantRepository.searchRestaurant(builder, pageable, orderSpecifiers);
 
 
-        return restaurantList.stream()
-                .map(temp -> RestaurantResponseDto.searchRestaurant.builder()
+        return restaurantList.map(temp -> RestaurantResponseDto.searchRestaurant.builder()
                         .score(temp.getStar())
                         .restaurantName(temp.getName())
                         .description(temp.getDescription())
                         .regionName(temp.getRegion().getName())
                         .createdAt(temp.getCreatedAt())
-                        .build())
-                .collect(Collectors.toList());
+                        .build());
     }
 }

@@ -4,6 +4,9 @@ import com.example.umc_9th_paulo.domain.restaurant.dto.RestaurantResponseDto;
 import com.example.umc_9th_paulo.domain.restaurant.service.RestaurantQueryService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,9 +22,10 @@ public class RestaurantController {
     private final RestaurantQueryService restaurantQueryService;
     @GetMapping
     @Operation(summary = "식당 검색 API")
-    public List<RestaurantResponseDto.searchRestaurant> searchRestaurant(
+    public Page<RestaurantResponseDto.searchRestaurant> searchRestaurant(
             @RequestParam(value = "regionName", required = false) List<String> regionName,
-            @RequestParam(value = "content", required = false) String content) {
-        return restaurantQueryService.searchRestaurants(regionName, content);
+            @RequestParam(value = "content", required = false) String content,
+            @PageableDefault(size = 10, page = 0) Pageable pageable) {
+        return restaurantQueryService.searchRestaurants(regionName, content, pageable);
     }
 }
