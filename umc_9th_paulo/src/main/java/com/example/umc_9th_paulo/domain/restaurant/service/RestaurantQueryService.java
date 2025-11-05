@@ -7,6 +7,10 @@ import com.example.umc_9th_paulo.domain.restaurant.entity.QRestaurant;
 import com.example.umc_9th_paulo.domain.restaurant.entity.Restaurant;
 import com.example.umc_9th_paulo.domain.restaurant.repository.RestaurantRepository;
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.OrderSpecifier;
+import com.querydsl.core.types.dsl.CaseBuilder;
+import com.querydsl.core.types.dsl.Expressions;
+import com.querydsl.core.types.dsl.NumberExpression;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.usertype.BaseUserTypeSupport;
 import org.springframework.stereotype.Service;
@@ -46,7 +50,19 @@ public class RestaurantQueryService {
             }
         }
 
-        List<Restaurant> restaurantList = restaurantRepository.searchRestaurant(builder);
+        NumberExpression<Integer> nameCategoryOrder = new CaseBuilder()
+                .when(restaurant.name.between("가", "힣")).then(1)
+                .when(restaurant.name.between("A", "Z")).then(2)
+                .when(restaurant.name.between("a", "z")).then(3)
+                .otherwise(4);
+
+        OrderSpecifier<?>[] orderSpecifiers = new OrderSpecifier[]{
+                nameCategoryOrder.asc(),
+                restaurant.createdAt.desc()
+        };
+
+        List<Restaurant> restaurantList = restaurantRepository.searchRestaurant(builder, orderSpecifiers);
+
 
         return restaurantList.stream()
                 .map(temp -> RestaurantResponseDto.searchRestaurant.builder()

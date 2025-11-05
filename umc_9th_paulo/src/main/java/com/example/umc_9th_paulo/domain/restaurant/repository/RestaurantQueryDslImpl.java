@@ -3,6 +3,7 @@ package com.example.umc_9th_paulo.domain.restaurant.repository;
 import com.example.umc_9th_paulo.domain.restaurant.entity.QRegion;
 import com.example.umc_9th_paulo.domain.restaurant.entity.QRestaurant;
 import com.example.umc_9th_paulo.domain.restaurant.entity.Restaurant;
+import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
@@ -18,7 +19,7 @@ public class RestaurantQueryDslImpl implements RestaurantQueryDsl {
     private final EntityManager em;
 
     @Override
-    public List<Restaurant> searchRestaurant(Predicate predicate) {
+    public List<Restaurant> searchRestaurant(Predicate predicate, OrderSpecifier<?>... orderSpecifiers) {
         JPAQueryFactory queryFactory = new JPAQueryFactory(em);
 
         QRestaurant restaurant = QRestaurant.restaurant;
@@ -28,6 +29,7 @@ public class RestaurantQueryDslImpl implements RestaurantQueryDsl {
                 .selectFrom(restaurant)
                 .leftJoin(region).on(restaurant.region.id.eq(region.id))
                 .where(predicate)
+                .orderBy(orderSpecifiers)
                 .fetch();
     }
 }

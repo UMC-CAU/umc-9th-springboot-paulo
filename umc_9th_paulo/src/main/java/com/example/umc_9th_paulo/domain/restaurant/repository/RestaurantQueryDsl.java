@@ -1,10 +1,11 @@
 package com.example.umc_9th_paulo.domain.restaurant.repository;
 
 import com.example.umc_9th_paulo.domain.restaurant.entity.Restaurant;
+import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Predicate;
 
 import java.util.List;
 
 public interface RestaurantQueryDsl {
-    List<Restaurant> searchRestaurant(Predicate predicate);
+    List<Restaurant> searchRestaurant(Predicate predicate, OrderSpecifier<?>... orderSpecifiers);
 }
