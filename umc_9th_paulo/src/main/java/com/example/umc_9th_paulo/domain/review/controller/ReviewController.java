@@ -28,13 +28,14 @@ public class ReviewController {
 
     @GetMapping
     @Operation(summary = "리뷰 조회 API ( QueryDsl 사용 )")
-    public List<ReviewResponseDto.searchReview> getUserReviewList(@RequestParam(value = "regionName", required = false) String regionName,
+    public List<ReviewResponseDto.searchReview> getUserReviewList(
+                                            @RequestParam(value = "restaurantName", required = false) String regionName,
                                           @RequestParam(value = "star", required = false) Float star,
                                           //UserId는 임시 사용
                                           @RequestParam(value = "userId") Long userId,
                                           @RequestParam(value = "type") Integer type
     ) {
-        List<ReviewResponseDto.searchReview> result = reviewQueryService.searchReview(regionName, star, userId, type);
+        List<ReviewResponseDto.searchReview> result = reviewQueryService.searchReview(restaurantName, star, userId, type);
         return result;
     }
 
