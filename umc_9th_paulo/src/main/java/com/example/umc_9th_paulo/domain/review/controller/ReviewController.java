@@ -29,7 +29,7 @@ public class ReviewController {
     @GetMapping
     @Operation(summary = "리뷰 조회 API ( QueryDsl 사용 )")
     public List<ReviewResponseDto.searchReview> getUserReviewList(
-                                            @RequestParam(value = "restaurantName", required = false) String regionName,
+                                            @RequestParam(value = "restaurantName", required = false) String restaurantName,
                                           @RequestParam(value = "star", required = false) Float star,
                                           //UserId는 임시 사용
                                           @RequestParam(value = "userId") Long userId,
