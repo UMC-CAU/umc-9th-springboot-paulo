@@ -11,11 +11,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+@Repository
 @RequiredArgsConstructor
 public class RestaurantQueryDslImpl implements RestaurantQueryDsl {
 
@@ -40,7 +41,7 @@ public class RestaurantQueryDslImpl implements RestaurantQueryDsl {
         Long total = queryFactory
                 .select(restaurant.count())
                 .from(restaurant)
-                .join(restaurant.region, region) // ◀ 조인/Where 조건 동일하게 적용
+                .join(restaurant.region, region)
                 .where(predicate)
                 .fetchOne();
 

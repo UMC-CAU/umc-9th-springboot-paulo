@@ -52,13 +52,20 @@ public class RestaurantQueryService {
         }
 
         NumberExpression<Integer> nameCategoryOrder = new CaseBuilder()
-                .when(restaurant.name.between("가", "힣")).then(1)
-                .when(restaurant.name.between("A", "Z")).then(2)
-                .when(restaurant.name.between("a", "z")).then(3)
+                .when(restaurant.name.substring(0, 1).between("가", "힣")).then(1)
+                .when(restaurant.name.substring(0, 1).between("A", "Z")).then(2)
+                .when(restaurant.name.substring(0, 1).between("a", "z")).then(3)
                 .otherwise(4);
+
+        NumberExpression<Integer> nameCategoryOrder1 = new CaseBuilder()
+                .when(restaurant.name.between("A", "Z")).then(1)
+                .when(restaurant.name.between("a", "z")).then(2)
+                .otherwise(3);
 
         OrderSpecifier<?>[] orderSpecifiers = new OrderSpecifier[]{
                 nameCategoryOrder.asc(),
+                nameCategoryOrder1.asc(),
+                restaurant.name.asc(),
                 restaurant.createdAt.desc()
         };
 
