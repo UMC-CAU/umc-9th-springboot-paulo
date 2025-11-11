@@ -2,6 +2,8 @@ package com.example.umc_9th_paulo.domain.restaurant.controller;
 
 import com.example.umc_9th_paulo.domain.restaurant.dto.RestaurantResponseDto;
 import com.example.umc_9th_paulo.domain.restaurant.service.RestaurantQueryService;
+import com.example.umc_9th_paulo.global.apiPayload.ApiResponse;
+import com.example.umc_9th_paulo.global.apiPayload.code.GeneralSuccessCode;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -22,10 +24,10 @@ public class RestaurantController {
     private final RestaurantQueryService restaurantQueryService;
     @GetMapping
     @Operation(summary = "식당 검색 API")
-    public Page<RestaurantResponseDto.searchRestaurant> searchRestaurant(
+    public ApiResponse<Page<RestaurantResponseDto.searchRestaurant>> searchRestaurant(
             @RequestParam(value = "regionName", required = false) List<String> regionName,
             @RequestParam(value = "content", required = false) String content,
             @PageableDefault(size = 10, page = 0) Pageable pageable) {
-        return restaurantQueryService.searchRestaurants(regionName, content, pageable);
+        return ApiResponse.onSuccess(GeneralSuccessCode._OK,restaurantQueryService.searchRestaurants(regionName, content, pageable));
     }
 }

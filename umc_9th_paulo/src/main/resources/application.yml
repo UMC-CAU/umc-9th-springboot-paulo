@@ -26,3 +26,8 @@ logging:
         type:
           descriptor:
             sql: TRACE
+
+server:
+  error:
+    include-message: always
+    include-stacktrace: always
