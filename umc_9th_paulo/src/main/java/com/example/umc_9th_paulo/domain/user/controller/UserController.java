@@ -25,4 +25,15 @@ public class UserController {
     public ApiResponse<UserResponseDto.UserMyPageDto> getUserMyPage(@PathVariable Long userId){
         return ApiResponse.onSuccess(GeneralSuccessCode._OK, userService.getUserMyPage(userId));
     }
+
+    @GetMapping("/test/npe") // 테스트용 임시 URL
+    public String testNpe() {
+        // 1. 일부러 null 객체를 만듭니다.
+        String s = null;
+
+        // 2. null 객체의 메소드를 호출하여 NullPointerException을 발생시킵니다.
+        s.length(); // <-- 여기서 500 에러 발생!
+
+        return "이 메시지는 절대 반환되지 않습니다.";
+    }
 }
