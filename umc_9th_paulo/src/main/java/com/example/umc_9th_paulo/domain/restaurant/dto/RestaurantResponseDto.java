@@ -19,4 +19,10 @@ public class RestaurantResponseDto {
         String description;
         LocalDateTime createdAt;
     }
+
+    @Builder
+    public record RestaurantMakeDto(
+            Long restaurnatId,
+            LocalDateTime createdAt
+    ){}
 }
