@@ -41,4 +41,16 @@ public class MissionResponseDto {
         String missionReward;
         Integer missionDuration;
     }
+
+    @Builder
+    public record CreateMission(
+            Long missionId,
+            LocalDateTime createdAt
+    ){}
+
+    @Builder
+    public record GoUserMission(
+            Long userMissionId,
+            LocalDateTime createdAt
+    ){}
 }

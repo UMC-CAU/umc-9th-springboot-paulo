@@ -2,6 +2,7 @@ package com.example.umc_9th_paulo.domain.mission.controller;
 
 import com.example.umc_9th_paulo.domain.mission.dto.MissionRequestDto;
 import com.example.umc_9th_paulo.domain.mission.dto.MissionResponseDto;
+import com.example.umc_9th_paulo.domain.mission.exception.code.MissionSuccessCode;
 import com.example.umc_9th_paulo.domain.mission.service.MissionService;
 import com.example.umc_9th_paulo.global.apiPayload.ApiResponse;
 import com.example.umc_9th_paulo.global.apiPayload.code.BaseSuccessCode;
@@ -36,5 +37,19 @@ public class MissionController {
                                                                      @RequestParam Long userId,
                                                                      @PageableDefault(size = 10, sort = "remainingDuration") Pageable pageable) {
         return ApiResponse.onSuccess(GeneralSuccessCode._OK,missionService.getRegionMissionCanDo(regionName, userId, pageable));
+    }
+
+    @PostMapping
+    public ApiResponse<MissionResponseDto.CreateMission> createMission(
+            @RequestBody MissionRequestDto.CreateMission dto
+    ){
+        return ApiResponse.onSuccess(MissionSuccessCode.CREATE, missionService.createMission(dto));
+    }
+
+    @PostMapping("/users")
+    public ApiResponse<MissionResponseDto.GoUserMission> goUserMission(
+            @RequestBody MissionRequestDto.GoUserMission dto
+    ){
+        return ApiResponse.onSuccess(MissionSuccessCode.CREATE, missionService.goUserMission(dto));
     }
 }
