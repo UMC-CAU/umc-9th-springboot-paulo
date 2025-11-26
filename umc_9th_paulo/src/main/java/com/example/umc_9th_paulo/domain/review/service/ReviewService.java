@@ -1,6 +1,10 @@
 package com.example.umc_9th_paulo.domain.review.service;
 
+import com.example.umc_9th_paulo.domain.restaurant.entity.Restaurant;
+import com.example.umc_9th_paulo.domain.restaurant.exception.RestaurantException;
+import com.example.umc_9th_paulo.domain.restaurant.exception.code.RestaurantErrorCode;
 import com.example.umc_9th_paulo.domain.restaurant.repository.RestaurantRepository;
+import com.example.umc_9th_paulo.domain.review.converter.ReviewConverter;
 import com.example.umc_9th_paulo.domain.review.dto.ReviewRequestDto;
 import com.example.umc_9th_paulo.domain.review.dto.ReviewResponseDto;
 import com.example.umc_9th_paulo.domain.review.entity.Review;
@@ -19,18 +23,16 @@ public class ReviewService {
     private final RestaurantRepository restaurantRepository;
 
     @Transactional
-    public ReviewResponseDto.CreateReview createReview(ReviewRequestDto.CreateReview dto) {
+    public ReviewResponseDto.CreateReview1 createReview(ReviewRequestDto.CreateReview1 dto) {
 
-        Review review = Review.builder()
-                .score(dto.getScore())
-                .content(dto.getContent())
-                .user(userRepository.findById(dto.getUserId()).orElseThrow())
-                .restaurant(restaurantRepository.findById(dto.getRestaurantId()).orElseThrow())
-                .build();
-        reviewRepository.save(review);
-        return ReviewResponseDto.CreateReview.builder()
-                .reviewId(review.getId())
-                .createdAt(review.getCreatedAt())
-                .build();
+        Restaurant restaurant = restaurantRepository.findById(dto.restaurantId()).orElseThrow(() -> new RestaurantException(RestaurantErrorCode.NOT_FOUND));
+
+        //어차피 하드코딩이라 restaurant로 햇습니다
+        User user = userRepository.findById(dto.userId()).orElseThrow(() -> new RestaurantException(RestaurantErrorCode.NOT_FOUND));
+        Review review = ReviewConverter.toCreateReview(dto, user, restaurant);
+
+
+        Review savedReview = reviewRepository.save(review);
+        return ReviewConverter.toCreateReview(savedReview);
     }
 }

@@ -20,6 +20,12 @@ public class ReviewResponseDto {
         LocalDateTime createdAt;
     }
 
+    @Builder
+    public record CreateReview1(
+            Long reviewId,
+            LocalDateTime createdAt
+    ){}
+
 
     @Builder
     @Getter
