@@ -7,15 +7,18 @@ import com.example.umc_9th_paulo.domain.review.exception.code.ReviewSuccessCode;
 import com.example.umc_9th_paulo.domain.review.service.ReviewCommandService;
 import com.example.umc_9th_paulo.domain.review.service.ReviewQueryService;
 import com.example.umc_9th_paulo.domain.review.service.ReviewService;
+import com.example.umc_9th_paulo.global.annotation.CheckPage;
 import com.example.umc_9th_paulo.global.apiPayload.ApiResponse;
 import com.example.umc_9th_paulo.global.apiPayload.code.GeneralSuccessCode;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@Validated
 @RequiredArgsConstructor
 @RequestMapping("/reviews")
 public class ReviewController implements ReviewControllerDocs{
@@ -45,7 +48,7 @@ public class ReviewController implements ReviewControllerDocs{
 
     @GetMapping
     public ApiResponse<ReviewResponseDto.SearchList> searchReviews(
-            @RequestParam(defaultValue = "1") Integer page,
+            @CheckPage @RequestParam(defaultValue = "1") Integer page,
             @RequestParam Long userId,
             @RequestParam Long restaurantId
     ){
