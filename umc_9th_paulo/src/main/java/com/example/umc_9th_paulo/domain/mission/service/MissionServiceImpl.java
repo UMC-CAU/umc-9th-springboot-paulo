@@ -16,6 +16,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -42,5 +43,13 @@ public class MissionServiceImpl implements MissionCommandService{
         PageRequest pageRequest = PageRequest.of(page, 5);
         Page<UserMission> result = userMissionRepository.findByUserAndIsSuccessFalseAndMission_RemainingDurationGreaterThanEqual(user, 0, pageRequest);
         return MissionConverter.getUserMissionsList(result);
+    }
+
+    @Transactional
+    public MissionResponseDto.GetMissionSliceList getMissionSliceList(Integer page, Long restaurantId) {
+        Restaurant restaurant = restaurantRepository.findById(restaurantId).orElseThrow(() -> new RestaurantException(RestaurantErrorCode.NOT_FOUND));
+        PageRequest pageRequest = PageRequest.of(page,5);
+        Slice<Mission> result = missionRepository.findSliceAllByRestaurant(restaurant, pageRequest);
+        return MissionConverter.getMissionSliceList(result);
     }
 }

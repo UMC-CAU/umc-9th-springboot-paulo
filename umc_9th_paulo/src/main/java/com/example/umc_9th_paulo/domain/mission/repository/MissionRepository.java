@@ -5,6 +5,7 @@ import com.example.umc_9th_paulo.domain.restaurant.entity.Restaurant;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -22,4 +23,6 @@ public interface MissionRepository extends JpaRepository<Mission, Long> {
     Page<Mission> findByRegionAndUserNotIn(@Param("regionId") Long regionId, @Param("userId") Long userId, Pageable pageable);
 
     Page<Mission> findAllByRestaurant(Restaurant restaurant, Pageable pageable);
+
+    Slice<Mission> findSliceAllByRestaurant(Restaurant restaurant, Pageable pageable);
 }

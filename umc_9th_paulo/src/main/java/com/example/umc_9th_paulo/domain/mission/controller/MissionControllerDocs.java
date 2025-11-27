@@ -34,4 +34,18 @@ public interface MissionControllerDocs {
             @CheckPage @RequestParam Integer page,
             @RequestParam Long userId
     );
+
+    @Operation(
+            summary = "가게별 미션 확인",
+            description = "가게별 미션을 조회. 페이지네이션"
+    )
+    @ApiResponses({
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "성공"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "실패")
+    })
+    ApiResponse<MissionResponseDto.GetMissionSliceList> getMissionsListSlice(
+            @CheckPage @RequestParam Integer page,
+            @RequestParam Long restaurantId
+    );
+
 }

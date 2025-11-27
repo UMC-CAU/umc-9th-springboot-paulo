@@ -70,4 +70,12 @@ public class MissionController implements MissionControllerDocs{
             @CheckPage @RequestParam Integer page, @RequestParam Long userId) {
         return ApiResponse.onSuccess(MissionSuccessCode.FOUND, missionCommandService.getUserDoingMissionsList(page-1, userId));
     }
+
+    @Override
+    @GetMapping("/UMC9TH/slice")
+    public ApiResponse<MissionResponseDto.GetMissionSliceList> getMissionsListSlice(
+            @CheckPage @RequestParam Integer page,
+            @RequestParam Long restaurantId) {
+        return ApiResponse.onSuccess(MissionSuccessCode.FOUND, missionCommandService.getMissionSliceList(page-1, restaurantId));
+    }
 }

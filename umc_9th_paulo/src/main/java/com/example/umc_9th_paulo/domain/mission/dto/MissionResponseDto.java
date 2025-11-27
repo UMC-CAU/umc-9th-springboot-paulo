@@ -67,6 +67,14 @@ public class MissionResponseDto {
     ){}
 
     @Builder
+    public record GetMissionSliceList(
+            List<GetMission> list,
+            Integer listSize,
+            Integer page,
+            Boolean hasNext
+    ){}
+
+    @Builder
     public record GetMission(
             Long MissionId,
             LocalDateTime createdAt,

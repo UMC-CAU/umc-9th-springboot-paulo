@@ -7,6 +7,7 @@ import com.example.umc_9th_paulo.domain.mission.entity.UserMission;
 import com.example.umc_9th_paulo.domain.restaurant.entity.Restaurant;
 import com.example.umc_9th_paulo.domain.user.entity.User;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Slice;
 
 public class MissionConverter {
     public static MissionResponseDto.CreateMission createMission(Mission mission){
@@ -64,6 +65,17 @@ public class MissionConverter {
                 .totalElements(missions.getTotalElements())
                 .isFirst(missions.isFirst())
                 .isLast(missions.isLast())
+                .build();
+    }
+
+    public static MissionResponseDto.GetMissionSliceList getMissionSliceList(Slice<Mission> missions){
+        return MissionResponseDto.GetMissionSliceList.builder()
+                .list(missions.getContent().stream()
+                        .map(MissionConverter::getMission)
+                        .toList())
+                .listSize(missions.getNumberOfElements())
+                .page(missions.getNumber())
+                .hasNext(missions.hasNext())
                 .build();
     }
 

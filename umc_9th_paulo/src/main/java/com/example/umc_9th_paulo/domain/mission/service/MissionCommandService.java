@@ -6,4 +6,6 @@ public interface MissionCommandService {
     MissionResponseDto.GetMissionsList getMissionsList(Integer page, Long restaurantId);
 
     MissionResponseDto.GetMissionsList getUserDoingMissionsList(Integer page, Long userId);
+
+    public MissionResponseDto.GetMissionSliceList getMissionSliceList(Integer page, Long restaurantId);
 }
