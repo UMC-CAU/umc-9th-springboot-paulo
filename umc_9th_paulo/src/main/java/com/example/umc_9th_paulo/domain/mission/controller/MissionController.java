@@ -3,7 +3,9 @@ package com.example.umc_9th_paulo.domain.mission.controller;
 import com.example.umc_9th_paulo.domain.mission.dto.MissionRequestDto;
 import com.example.umc_9th_paulo.domain.mission.dto.MissionResponseDto;
 import com.example.umc_9th_paulo.domain.mission.exception.code.MissionSuccessCode;
+import com.example.umc_9th_paulo.domain.mission.service.MissionCommandService;
 import com.example.umc_9th_paulo.domain.mission.service.MissionService;
+import com.example.umc_9th_paulo.global.annotation.CheckPage;
 import com.example.umc_9th_paulo.global.apiPayload.ApiResponse;
 import com.example.umc_9th_paulo.global.apiPayload.code.BaseSuccessCode;
 import com.example.umc_9th_paulo.global.apiPayload.code.GeneralSuccessCode;
@@ -16,9 +18,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/missions")
-public class MissionController {
+public class MissionController implements MissionControllerDocs{
 
     private final MissionService missionService;
+    private final MissionCommandService missionCommandService;
 
     @GetMapping("/users/{userId}")
     public ApiResponse<Page<MissionResponseDto.MissionUserDto>> getMissionUser(@PathVariable Long userId, @RequestParam("finished") Boolean finished,
@@ -51,5 +54,13 @@ public class MissionController {
             @RequestBody MissionRequestDto.GoUserMission dto
     ){
         return ApiResponse.onSuccess(MissionSuccessCode.CREATE, missionService.goUserMission(dto));
+    }
+
+    @Override
+    @GetMapping("/UMC9TH")
+    public ApiResponse<MissionResponseDto.GetMissionsList> getMissionsList(
+            @CheckPage @RequestParam Integer page,
+            @RequestParam Long restaurantId) {
+        return ApiResponse.onSuccess(MissionSuccessCode.FOUND, missionCommandService.getMissionsList(page-1, restaurantId));
     }
 }

@@ -1,11 +1,13 @@
 package com.example.umc_9th_paulo.domain.mission.dto;
 
+import com.example.umc_9th_paulo.domain.review.dto.ReviewResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class MissionResponseDto {
 
@@ -52,5 +54,24 @@ public class MissionResponseDto {
     public record GoUserMission(
             Long userMissionId,
             LocalDateTime createdAt
+    ){}
+
+    @Builder
+    public record GetMissionsList(
+            List<MissionResponseDto.GetMission> list,
+            Integer listSize,
+            Integer totalPage,
+            Long totalElements,
+            Boolean isFirst,
+            Boolean isLast
+    ){}
+
+    @Builder
+    public record GetMission(
+            Long MissionId,
+            LocalDateTime createdAt,
+            Integer missionDuration,
+            String missionDescription,
+            String reward
     ){}
 }
