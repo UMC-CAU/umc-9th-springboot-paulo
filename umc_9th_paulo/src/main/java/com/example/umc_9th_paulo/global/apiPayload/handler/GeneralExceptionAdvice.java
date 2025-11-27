@@ -7,12 +7,14 @@ import com.example.umc_9th_paulo.global.apiPayload.exception.GeneralException;
 import com.example.umc_9th_paulo.global.discord.DiscordClient;
 import com.example.umc_9th_paulo.global.discord.DiscordMessage;
 import jakarta.servlet.http.HttpServletRequest;
+import okhttp3.internal.http2.ErrorCode;
 import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
+import jakarta.validation.ConstraintViolationException;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -28,6 +30,12 @@ public class GeneralExceptionAdvice {
     public GeneralExceptionAdvice(DiscordClient discordClient, Environment environment) {
         this.discordClient = discordClient;
         this.environment = environment;
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ApiResponse<Object> handleConstraintViolation(ConstraintViolationException e) {
+        // 에러 메시지를 추출하여 응답 생성 (간단하게 구현)
+        return ApiResponse.onFailure(GeneralErrorCode.PAGE_ERROR, null);
     }
 
     // 애플리케이션에서 발생하는 커스텀 예외를 처리

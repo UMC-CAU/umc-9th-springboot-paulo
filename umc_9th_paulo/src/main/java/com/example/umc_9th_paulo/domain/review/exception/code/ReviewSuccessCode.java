@@ -9,7 +9,9 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor
 public enum ReviewSuccessCode implements BaseSuccessCode {
 
-    CREATED(HttpStatus.CREATED, "REVIEW201_1", "생성");
+    CREATED(HttpStatus.CREATED, "REVIEW201_1", "생성"),
+    FOUND(HttpStatus.FOUND,"REVIEW200_1", "찾음")
+    ;
 
     private final HttpStatus status;
     private final String code;

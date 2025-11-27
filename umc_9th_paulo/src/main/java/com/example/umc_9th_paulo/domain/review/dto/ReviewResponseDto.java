@@ -12,6 +12,26 @@ import java.util.List;
 public class ReviewResponseDto {
 
     @Builder
+    public record SearchList(
+            List<SearchReviews> list,
+            Integer listSize,
+            Integer totalPage,
+            Long totalElements,
+            Boolean isFirst,
+            Boolean isLast
+    ){}
+
+    @Builder
+    public record SearchReviews(
+            String restaurantName,
+            Float star,
+            String content,
+            List<String> images,
+            LocalDateTime createdAt,
+            String reply
+    ){}
+
+    @Builder
     @Getter
     @NoArgsConstructor
     @AllArgsConstructor
