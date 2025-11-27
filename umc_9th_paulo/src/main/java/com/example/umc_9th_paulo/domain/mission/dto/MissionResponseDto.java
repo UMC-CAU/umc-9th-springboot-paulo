@@ -74,4 +74,5 @@ public class MissionResponseDto {
             String missionDescription,
             String reward
     ){}
+
 }

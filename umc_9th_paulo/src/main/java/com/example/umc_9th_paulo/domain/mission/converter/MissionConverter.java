@@ -40,6 +40,20 @@ public class MissionConverter {
                 .build();
     }
 
+    public static MissionResponseDto.GetMissionsList getUserMissionsList(Page<UserMission> missions){
+        return MissionResponseDto.GetMissionsList.builder()
+                .list(missions.getContent().stream()
+                        .map(UserMission::getMission)
+                        .map(MissionConverter::getMission)
+                        .toList())
+                .listSize(missions.getSize())
+                .totalPage(missions.getTotalPages())
+                .totalElements(missions.getTotalElements())
+                .isFirst(missions.isFirst())
+                .isLast(missions.isLast())
+                .build();
+    }
+
     public static MissionResponseDto.GetMissionsList getMissionsList(Page<Mission> missions){
         return MissionResponseDto.GetMissionsList.builder()
                 .list(missions.getContent().stream()

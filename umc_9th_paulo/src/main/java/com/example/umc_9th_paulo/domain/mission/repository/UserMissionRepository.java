@@ -14,4 +14,6 @@ public interface UserMissionRepository extends JpaRepository<UserMission, Long> 
     Page<UserMission> findByUserAndIsSuccess(User user, Boolean isSuccess, Pageable pageable);
 
     Integer countByIsSuccessAndUserIdAndMission_Restaurant_Region_Id(Boolean isSuccess, Long userId, Long regionId);
+
+    Page<UserMission> findByUserAndIsSuccessFalseAndMission_RemainingDurationGreaterThanEqual(User user, Integer duration, Pageable pageable);
 }

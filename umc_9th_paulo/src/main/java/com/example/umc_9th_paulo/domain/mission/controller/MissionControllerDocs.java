@@ -21,4 +21,17 @@ public interface MissionControllerDocs {
             @CheckPage @RequestParam Integer page,
             @RequestParam Long restaurantId
     );
+
+    @Operation(
+            summary = "유저별 진행 중인 미션 확인",
+            description = "유저별 진행 중인 미션을 조회. 페이지네이션"
+    )
+    @ApiResponses({
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "성공"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "실패")
+    })
+    ApiResponse<MissionResponseDto.GetMissionsList> getUserDoingMissionsList(
+            @CheckPage @RequestParam Integer page,
+            @RequestParam Long userId
+    );
 }

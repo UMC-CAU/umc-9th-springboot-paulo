@@ -49,6 +49,6 @@ public class ReviewController implements ReviewControllerDocs{
             @RequestParam Long userId,
             @RequestParam Long restaurantId
     ){
-        return ApiResponse.onSuccess(ReviewSuccessCode.FOUND, reviewCommandService.searchReviewList(page, restaurantId, userId));
+        return ApiResponse.onSuccess(ReviewSuccessCode.FOUND, reviewCommandService.searchReviewList(page-1, restaurantId, userId));
     }
 }
